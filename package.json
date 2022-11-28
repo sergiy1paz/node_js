@@ -4,11 +4,12 @@
   "description": "repo for lab",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon ./app.js --exec babel-node -e js",
+    "start": "node --experimental-json-modules app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
