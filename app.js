@@ -1,30 +1,19 @@
 import express from 'express';
-import users from './data/users.json';
+import userRouter from './routes/userRoute.js';
 import _ from 'lodash';
+import morgan from 'morgan';
 
 const SERVER_PORT = 3001;
 const USERS_URL = '/api/v1/users';
 
 const server = express();
 
+server.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
+server.use(USERS_URL, userRouter);
+
 server.get('/', (req, res) => {
     console.log("Hello from root");
     res.send("Hello browser!");
-})
-
-// users
-server.get(USERS_URL, (req, res) => {
-    res.json(users);
-})
-
-server.get(`${USERS_URL}/:id`, (req, res) => {
-    const id = req.params.id;
-    const user = _.find(users, user => user.id === id);
-    if (user) {
-        res.json(user);
-    } else {
-        res.send("Not found");
-    }
 })
 
 server.listen(SERVER_PORT, () => {
