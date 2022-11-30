@@ -1,9 +1,10 @@
 import express from 'express';
-import userRouter from './routes/userRoute.js';
+import userRouter, { getUsersStorage } from './routes/userRoute.js';
 import _ from 'lodash';
 import morgan from 'morgan';
 import morganBody from 'morgan-body';
 import bodyParser from 'body-parser';
+import path from 'path';
 
 const SERVER_PORT = 3001;
 const USERS_URL = '/api/v1/users';
@@ -15,6 +16,9 @@ const server = express();
 server.use(bodyParser.json());
 morganBody(server);
 
+server.set('views', path.join('views'));
+server.set('view engine', 'ejs');
+
 server.use(USERS_URL, userRouter);
 // middleware
 
@@ -22,6 +26,10 @@ server.use(USERS_URL, userRouter);
 server.get('/', (req, res) => {
     console.log("Hello from root");
     res.send("Hello browser!");
+})
+
+server.get('/show', (req, res) => {
+    res.render('index', { users: getUsersStorage() })
 })
 
 server.listen(SERVER_PORT, () => {

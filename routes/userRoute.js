@@ -4,6 +4,8 @@ import users from '../data/users.json';
 
 let usersStorage = _.toArray(users);
 
+export const getUsersStorage = () => [...usersStorage];
+
 const userRouter = express.Router();
 
 userRouter.get('/', (req, res) => {
