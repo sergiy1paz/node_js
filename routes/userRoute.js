@@ -14,9 +14,9 @@ userRouter.get(`/:id`, (req, res) => {
     const id = req.params.id;
     const user = _.find(usersStorage, user => user.id === id);
     if (user) {
-        res.json(user);
+        res.status(200).json(user);
     } else {
-        res.send("Not found");
+        res.status(404).send("Not found");
     }
 })
 
@@ -27,9 +27,9 @@ userRouter.post("/", (req, res) => {
             ...userRequest,
             id: (usersStorage.length + 1).toString()
         });
-        return res.send("201 Created")
+        return res.status(201).send("Created")
     }
-    return res.send("403 Bad request")
+    return res.status(403).send("Bad request")
 })
 
 export default userRouter;
