@@ -1,5 +1,5 @@
 import express from 'express';
-import userRouter, { getUsersStorage } from './routes/userRoute.js';
+import userRouter, { getLocalUsers, getDbUsers } from './routes/userRoute.js';
 import _ from 'lodash';
 import morgan from 'morgan';
 import morganBody from 'morgan-body';
@@ -28,8 +28,8 @@ server.get('/', (req, res) => {
     res.send("Hello browser!");
 })
 
-server.get('/show', (req, res) => {
-    res.render('index', { users: getUsersStorage() })
+server.get('/show', async (req, res) => {
+    res.render('index', { users: await getDbUsers() })
 })
 
 server.listen(SERVER_PORT, () => {
