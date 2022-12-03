@@ -99,13 +99,17 @@ userRouter.patch("/db/:id", async (req, res) => {
 
     const userObjectId = mongoose.Types.ObjectId(id);
 
-    await UserModel.updateOne({
-        _id: userObjectId,
-        ...(updates.username ? { username: updates.username } : {}),
-        ...(updates.email ? { email: updates.email } : {}),
-        ...(updates.password ? { password: updates.password } : {}),
-        ...(updates.ip_address ? { ip_address: updates.ip_address } : {})
-    });
+
+    await UserModel.updateOne(
+        {
+            _id: userObjectId
+        },
+        {
+            ...(updates.username ? { username: updates.username } : {}),
+            ...(updates.email ? { email: updates.email } : {}),
+            ...(updates.password ? { password: updates.password } : {}),
+            ...(updates.ip_address ? { ip_address: updates.ip_address } : {})
+        });
 
     const updatedUser = await UserModel.findOne({ _id: userObjectId });
     if (updatedUser) {
